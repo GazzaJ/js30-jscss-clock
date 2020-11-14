@@ -6,17 +6,20 @@ const hourHand = document.getElementById("hour-hand");
 function setTime() {
     const now = new Date();
 
-    const seconds = now.getUTCSeconds();
-    const secondsDegrees = (((seconds / 60) * 360) + 90);
-    secondHand.style.transform = `rotate(${secondsDegrees}deg)`
+    const seconds = now.getSeconds();
+    const secondsFraction = seconds / 60;
+    const secondsRotate = secondsFraction * 360;
+    secondHand.style.transform = `rotate(${secondsRotate}deg)`;
 
-    const minutes = now.getUTCMinutes();
-    const minutesDegrees = (((minutes / 60) * 360) + 90);
-    minuteHand.style.transform = `rotate(${minutesDegrees}deg)`
+    const minutes = now.getMinutes();
+    const minutesFraction = (secondsFraction + minutes) / 60;
+    const minutesRotate = minutesFraction * 360;
+    minuteHand.style.transform = `rotate(${minutesRotate}deg)`;
     
-    const hours = now.getUTCHours();
-    const hoursDegrees = ((((hours + minutes / 60) / 24) * 360) + 90);
-    hourHand.style.Transform = `rotate(${hoursDegrees}deg)`
+    const hours = now.getHours();
+    const hoursFraction = (minutesFraction + hours) / 12;
+    const hoursRotate = hoursFraction * 360;
+    hourHand.style.Transform = `rotate(${hoursRotate}deg)`;
 }
 
 setInterval(setTime, 1000)
